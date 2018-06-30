@@ -32,10 +32,10 @@ CREATE TABLE `comment` (
   `isAnonymous` tinyint(1) NOT NULL,
   `name` varchar(30) NOT NULL,
   `content` text NOT NULL,
-  `createdOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedBy` int(11) NOT NULL,
-  `createdBy` int(11) NOT NULL,
+  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
   `topic` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -48,10 +48,10 @@ CREATE TABLE `comment` (
 CREATE TABLE `tag` (
   `id` int(11) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
-  `createdOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedBy` int(11) NOT NULL,
-  `createdBy` int(11) NOT NULL,
+  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -66,9 +66,9 @@ CREATE TABLE `topic` (
   `title` varchar(100) NOT NULL,
   `content` mediumtext NOT NULL,
   `author` int(11) NOT NULL,
-  `createdOn` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updatedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedBy` int(11) NOT NULL,
+  `created_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) NOT NULL,
   `public` varchar(20) NOT NULL,
   `deleted` tinyint(4) NOT NULL,
   `banner` varchar(100) NOT NULL
@@ -96,10 +96,10 @@ CREATE TABLE `user` (
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `avatar` varchar(30) DEFAULT NULL,
-  `createdOn` datetime NOT NULL,
-  `updatedOn` timestamp NULL DEFAULT NULL,
-  `updatedBy` int(11) DEFAULT NULL,
-  `createdBy` int(11) DEFAULT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` timestamp NULL DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
   `deleted` tinyint(1) DEFAULT NULL,
   `role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

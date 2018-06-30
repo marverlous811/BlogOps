@@ -83,7 +83,7 @@ CREATE TABLE `topic` (
 CREATE TABLE `topic_tag` (
   `topic_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

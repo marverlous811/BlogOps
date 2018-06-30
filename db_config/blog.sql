@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2018 at 02:08 AM
+-- Generation Time: Jun 30, 2018 at 12:38 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `deleted` tinyint(4) NOT NULL,
-  `isAnonymous` tinyint(4) NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `isAnonymous` tinyint(1) NOT NULL,
   `name` varchar(30) NOT NULL,
   `content` text NOT NULL,
   `createdOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,7 +37,7 @@ CREATE TABLE `comment` (
   `updatedBy` int(11) NOT NULL,
   `createdBy` int(11) NOT NULL,
   `topic` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -47,13 +47,13 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `tag` (
   `id` int(11) NOT NULL,
-  `deleted` tinyint(4) NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
   `createdOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedBy` int(11) NOT NULL,
   `createdBy` int(11) NOT NULL,
   `name` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -71,8 +71,18 @@ CREATE TABLE `topic` (
   `updatedBy` int(11) NOT NULL,
   `public` varchar(20) NOT NULL,
   `deleted` tinyint(4) NOT NULL,
-  `tag` varchar(100) NOT NULL,
   `banner` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topic_tag`
+--
+
+CREATE TABLE `topic_tag` (
+  `topic_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,9 +100,9 @@ CREATE TABLE `user` (
   `updatedOn` timestamp NULL DEFAULT NULL,
   `updatedBy` int(11) DEFAULT NULL,
   `createdBy` int(11) DEFAULT NULL,
-  `deleted` tinyint(4) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
   `role` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -102,10 +112,10 @@ CREATE TABLE `user` (
 
 CREATE TABLE `user_role` (
   `id` int(11) NOT NULL,
-  `deleted` tinyint(4) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT '0',
   `name` varchar(30) NOT NULL,
   `access` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -130,6 +140,14 @@ ALTER TABLE `tag`
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`id`),
   ADD KEY `author` (`author`);
+
+--
+-- Indexes for table `topic_tag`
+--
+ALTER TABLE `topic_tag`
+  ADD PRIMARY KEY (`topic_id`,`tag_id`),
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `tag_id` (`tag_id`);
 
 --
 -- Indexes for table `user`
@@ -188,6 +206,13 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `topic`
   ADD CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`author`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `topic_tag`
+--
+ALTER TABLE `topic_tag`
+  ADD CONSTRAINT `topic_tag_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `topic_tag_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user`
